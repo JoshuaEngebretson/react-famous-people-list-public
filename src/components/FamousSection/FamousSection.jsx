@@ -32,6 +32,19 @@ function FamousSection() {
     console.log(`The person is ${famousPersonName} and they're famous for ${famousPersonRole}`);
     
     // TODO: create POST request to add this new person to the database
+    axios({
+      method: 'POST',
+      url: '/people',
+      data: {
+        name: famousPersonName,
+        role: famousPersonRole
+      }
+    }).then((reponse) => {
+      fetchPeople();
+
+    }).catch((error) => {
+
+    })
 
     // HINT: the server is expecting a person object 
     //       with a `name` and a `role` property
@@ -42,9 +55,15 @@ function FamousSection() {
       <section className="new-person-section">
         <form onSubmit={addPerson}>
           <label htmlFor="name-input">Name:</label>
-          <input id="name-input" onChange={e => setPersonName(e.target.value)} />
+          <input 
+            id="name-input"
+            onChange={e => setPersonName(e.target.value)}
+          />
           <label htmlFor="role-input">Famous for:</label>
-          <input id="role-input" onChange={e => setPersonRole(e.target.value)} />
+          <input 
+            id="role-input"
+            onChange={e => setPersonRole(e.target.value)}
+          />
           <button type="submit">Done</button>
         </form>
         <p>
@@ -54,7 +73,7 @@ function FamousSection() {
           {/* TODO: Render the list of famous people */}
           {
             famousPeopleArray.map((person) => {
-              return <li key={person.id}>{person.name}, known for the role of {person.role}</li>
+              return <li key={person.id}>{person.name} is famous for "{person.role}".</li>
             })
           }
         </ul>
